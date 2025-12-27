@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 st.set_page_config(page_title="Class V Student Performance Bot")
 
@@ -39,7 +40,7 @@ if uploaded_file:
         ["Student-wise Performance", "Subject-wise Class Average", "View Cleaned Data"]
     )
 
-    # OPTION 1
+    # OPTION 1: Student-wise Performance
     if option == "Student-wise Performance":
         student = st.selectbox(
             "👦 Select Student Name",
@@ -49,31 +50,8 @@ if uploaded_file:
         student_data = df_long[df_long["Student Name"] == student]
         st.dataframe(student_data)
 
-        fig, ax = plt.subplots(figsize=(10, 6))
-        ax.bar(student_data["Subject"], student_data["Marks"])
-        ax.set_title(f"{student} - Subject-wise Marks")
-        ax.set_ylabel("Marks")
-        ax.set_xlabel("Subject")
-        plt.xticks(rotation=45, ha="right")
-        plt.tight_layout()
-        st.pyplot(fig)
-        plt.close(fig)
+        colors = cm.get_cmap('tab20').colors
+        num_bars = len(student_data["Subject"])
+        bar_colors = colors[:num_bars]
 
-    # OPTION 2
-    elif option == "Subject-wise Class Average":
-        avg_data = df_long.groupby("Subject")["Marks"].mean().reset_index()
-        st.dataframe(avg_data)
-
-        fig, ax = plt.subplots(figsize=(10, 6))
-        ax.bar(avg_data["Subject"], avg_data["Marks"])
-        ax.set_title("📘 Subject-wise Class Average")
-        ax.set_ylabel("Average Marks")
-        ax.set_xlabel("Subject")
-        plt.xticks(rotation=45, ha="right")
-        plt.tight_layout()
-        st.pyplot(fig)
-        plt.close(fig)
-
-    # OPTION 3
-    else:
-        st.data
+        fig, ax = plt.subplots(figsize=(10, 6)
