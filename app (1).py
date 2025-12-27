@@ -55,7 +55,7 @@ if uploaded_file:
         ax.set_title(f"{student} - Subject-wise Marks")
         ax.set_ylabel("Marks")
         ax.set_xlabel("Subject")
-        st.pyplot(fig)
+        st.pyplot(fig, clear_figure=True)
 
     # OPTION 2
     elif option == "Subject-wise Class Average":
@@ -65,9 +65,8 @@ if uploaded_file:
         fig, ax = plt.subplots()
         ax.bar(avg_data["Subject"], avg_data["Marks"])
         ax.set_title("📘 Subject-wise Class Average")
-        st.pyplot(fig)
+        st.pyplot(fig, clear_figure=True)
 
     # OPTION 3
     else:
         st.dataframe(df_long)
-
