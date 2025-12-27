@@ -15,7 +15,6 @@ if uploaded_file:
     df.columns = df.columns.str.strip()
 
     non_mark_columns = ["S.No.", "Class", "Section", "Roll No", "Roll No.", "Student Name"]
-
     subject_columns = [col for col in df.columns if col not in non_mark_columns]
 
     df_long = df.melt(
@@ -50,25 +49,31 @@ if uploaded_file:
         student_data = df_long[df_long["Student Name"] == student]
         st.dataframe(student_data)
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(10, 6))
         ax.bar(student_data["Subject"], student_data["Marks"])
         ax.set_title(f"{student} - Subject-wise Marks")
         ax.set_ylabel("Marks")
         ax.set_xlabel("Subject")
+        plt.xticks(rotation=45, ha="right")
+        plt.tight_layout()
         st.pyplot(fig)
+        plt.close(fig)
 
     # OPTION 2
     elif option == "Subject-wise Class Average":
         avg_data = df_long.groupby("Subject")["Marks"].mean().reset_index()
         st.dataframe(avg_data)
 
-        fig, ax = plt.subplots()
+        fig, ax = plt.subplots(figsize=(10, 6))
         ax.bar(avg_data["Subject"], avg_data["Marks"])
         ax.set_title("📘 Subject-wise Class Average")
+        ax.set_ylabel("Average Marks")
+        ax.set_xlabel("Subject")
+        plt.xticks(rotation=45, ha="right")
+        plt.tight_layout()
         st.pyplot(fig)
+        plt.close(fig)
 
     # OPTION 3
     else:
-        st.dataframe(df_long)
-
-
+        st.data
